@@ -7,6 +7,11 @@
                <box size = "0.94 0.78 1.98"/>
             </geometry>
         </visual>
+        <collision>
+            <geometry>
+                <box size = "0.94 0.78 1.98"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name = "laser_vert_bottom">
@@ -15,6 +20,11 @@
                 <box size = "0.062 0.062 0.087"/>
             </geometry>
         </visual>
+        <collision>
+            <geometry>
+                <box size = "0.062 0.062 0.087"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name = "laser_vert_top_right">
@@ -23,6 +33,11 @@
                 <box size = "0.062 0.062 0.087"/>
             </geometry>
         </visual>
+        <collision>
+            <geometry>
+                <box size = "0.062 0.062 0.087"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name = "laser_vert_top_left">
@@ -31,6 +46,12 @@
                 <box size = "0.062 0.062 0.087"/>
             </geometry>
         </visual>
+        <collision>
+            <geometry>
+                <box size = "0.062 0.062 0.087"/>
+            </geometry>
+        </collision>
+            
     </link>
 
     <link name = "laser_horiz">
