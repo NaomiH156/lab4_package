@@ -1,8 +1,7 @@
-<robot name="navvi_bot">
+<?xml version = "1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name = "robot_xacro">
 
-
-<!-- re define base origin later!!! -->
-
+    
     <link name = "base">
         <visual>
             <geometry>
@@ -71,18 +70,47 @@
         </collision>
     </link>
     
-    <link name = "wheel_left">
+
+    <xacro:macro name = "xacro_name" params = "suffix reflect" >
+        <link name = "wheel_${suffix}">
+            <visual>
+                <geometry>
+                    <cylinder radius = "0.2" length = "0.05" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius = "0.2" length = "0.05" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name = "base_wheel_${suffix}_joint" type = "fixed">
+            <origin xyz="-0.1 ${reflect * 0.4} 0" rpy = "-1.57079632679 0 0"/>
+            <parent link = "base"/>
+            <child link = "wheel_${suffix}"/>
+        </joint>
+    </xacro:macro>
+    <xacro:xacro_name suffix = "left" reflect = "1"/>
+    <xacro:xacro_name suffix = "right" reflect = "-1"/>
+
+    <link name = "wheel_center">
         <visual>
             <geometry>
-                <cylinder radius = "0.2" length = "0.05" />
+                <cylinder radius = "0.15" length = "0.05"/>
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <cylinder radius = "0.2" length = "0.05" />
+                <cylinder radius = "0.15" length = "0.05"/>
             </geometry>
         </collision>
     </link>
+
+    <joint name = "base_wheel_center_joint" type = "fixed">
+        <origin xyz = "0.10 0 -0.05" rpy = "-1.57079632679 0 0"/>
+        <parent link = "base"/>
+        <parent child = "wheel_center"/>
+    </joint>
 
     <joint name = "base_laser_vert_bottom_joint" type = "fixed">
         <origin xyz = "0.3158 -0.0021 0.51" rpy = "3.1355 -1.3045 0.0025" />
@@ -108,9 +136,5 @@
         <child link = "laser_horiz"/>
     </joint>
     
-    <joint name = "base_wheel_left_joint" type = "fixed">
-        <origin xyz = "-0.1 0.4 0" rpy = "-1.57079632679 0 0" />
-        <parent link = "base"/>
-        <child link = "wheel_left"/>
-    </joint>
+
 </robot>

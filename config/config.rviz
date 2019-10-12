@@ -8,6 +8,8 @@ Panels:
         - /Status1
         - /RobotModel1
         - /RobotModel1/Links1
+        - /RobotModel1/Links1/base1
+        - /RobotModel1/Links1/laser_horiz1
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz/Selection
@@ -89,6 +91,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        wheel_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wheel_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -130,19 +142,39 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.7345050573348999
+        Y: -1.5742179155349731
+        Z: 0.8663821220397949
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.785398006439209
+      Pitch: 0.09539863467216492
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.785398006439209
-    Saved: ~
+      Yaw: 3.1254196166992188
+    Saved:
+      - Class: rviz/Orbit
+        Distance: 10
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Focal Point:
+          X: 0.9688653945922852
+          Y: -0.6798796057701111
+          Z: -0.2043442279100418
+        Focal Shape Fixed Size: true
+        Focal Shape Size: 0.05000000074505806
+        Invert Z Axis: false
+        Name: Orbit
+        Near Clip Distance: 0.009999999776482582
+        Pitch: 0.06039856746792793
+        Target Frame: <Fixed Frame>
+        Value: Orbit (rviz)
+        Yaw: 1.6004079580307007
 Window Geometry:
   Displays:
     collapsed: false
@@ -160,4 +192,4 @@ Window Geometry:
     collapsed: false
   Width: 1200
   X: 138
-  Y: 156
+  Y: 27
