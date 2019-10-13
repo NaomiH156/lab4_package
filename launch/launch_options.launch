@@ -1,16 +1,40 @@
 <launch>
+
+
+	<!--argument to use XACRO or URDF -->
 	<arg name = "use_xacro" default="false"/>
 
-	<arg if="$(arg use_xacro)" name = "filename" default = "robot_xacro.xacro"/>
-	<arg unless="$(arg use_xacro)" name = "filename" default = "urdf_from_xacro.urdf"/>
 
+	<!-- what is name of file to be used? can be accepted as an argument to this launch file,
+		but defaults to robot_xacro.xacro -->
+	<arg if="$(arg use_xacro)" name = "filename" default = "robot_xacro.xacro"/>
+	<arg unless="$(arg use_xacro)" name = "filename" default = "robot.urdf"/>
+		<!-- defaults to robot.urdf, which is the file i created by hand. does not include
+			all of the wheels (not yet, anyways) -->
+
+	<!-- can pass full path of URDF into launcher instead. Defaults to the filename defined
+		above. -->
 	<arg name = "file" default = "$(find lab4_package)/urdf/$(arg filename)" />
 
+
+	<!-- Use the "file" argument as the name of the to set /robot_description on the server -->
 	<param if = "$(arg use_xacro)" name="robot_description" command = "$(find xacro)/xacro.py --inorder $(arg file)" />
-	<param else="$(arg use_xacro)" name = "robot_description" textfile="$(arg file)" />
+		<!-- if using XACRO, the xacro file is converted directly into URDF and piped into
+			the relevant parameter. It is not saved as a .urdf file in between. -->
+	<param unless ="$(arg use_xacro)" name = "robot_description" textfile="$(arg file)" />
+		<!-- if using URDF, that URDF file is used for the relevant robot_description -->
 
 	<node pkg = "robot_state_publisher" type = "robot_state_publisher" name = "robot_state_publisher" />
+		<!-- runs the robot state publisher -->
+
+
+	<arg name = "Use_gui" default = "true"/>
+	<param if = "$(arg Use_gui)" name = "use_gui" value = "true" />
+	<param unless = "$(arg Use_gui)" name = "use_gui" value = "false"/>
+	<node pkg = "joint_state_publisher" type = "joint_state_publisher" name = "joint_state_publisher" />
+		<!-- runs the joint state publisher -->
 
 	<node pkg = "rviz" type="rviz" name = "rviz" args="-d $(find lab4_package)/config/config.rviz" required = "true" />
+		<!-- runs RVIZ by loading the saved config.rviz file -->
 
 </launch>

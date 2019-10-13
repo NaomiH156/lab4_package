@@ -1,6 +1,7 @@
 <?xml version = "1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name = "robot_xacro">
 
+
     
     <link name = "base">
         <visual>
@@ -17,7 +18,23 @@
         </collision>
     </link>
 
-    <link name = "laser_vert_bottom">
+    <xacro:include filename="$(find gazebo_plugins)/test/multi_robot_scenario/xacro/laser/hokuyo.xacro" />
+    <!-- the vertical lasers have the Hokuyo LIDAR -->
+    <xacro:hokuyo linkname = "laser_vert_bottom"/>
+     <!--   <visual>
+            <geometry>
+                <box size = "0.062 0.062 0.087"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size = "0.062 0.062 0.087"/>
+            </geometry>
+        </collision>
+    </link> -->
+    <!--<xacro:hokuyo linkname = "laser_vert_bottom"/>-->
+
+    <!--<link name = "laser_vert_top_right">
         <visual>
             <geometry>
                 <box size = "0.062 0.062 0.087"/>
@@ -28,9 +45,10 @@
                 <box size = "0.062 0.062 0.087"/>
             </geometry>
         </collision>
-    </link>
+    </link>-->
+    <xacro:hokuyo linkname = "laser_vert_top_right"/>
 
-    <link name = "laser_vert_top_right">
+    <!--<link name = "laser_vert_top_left">
         <visual>
             <geometry>
                 <box size = "0.062 0.062 0.087"/>
@@ -41,23 +59,14 @@
                 <box size = "0.062 0.062 0.087"/>
             </geometry>
         </collision>
-    </link>
+    </link> -->
+    <xacro:hokuyo linkname = "laser_vert_top_left"/>
 
-    <link name = "laser_vert_top_left">
-        <visual>
-            <geometry>
-                <box size = "0.062 0.062 0.087"/>
-            </geometry>
-        </visual>
-        <collision>
-            <geometry>
-                <box size = "0.062 0.062 0.087"/>
-            </geometry>
-        </collision>
-            
-    </link>
+    <!-- lazer_horiz has the velodyne thing -->
 
-    <link name = "laser_horiz">
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+
+    <!--<link name = "laser_horiz">
         <visual>
             <geometry>
                 <cylinder radius = "0.052" length = "0.072"/>
@@ -68,8 +77,10 @@
                 <cylinder radius = "0.052" length = "0.072"/>
             </geometry>
         </collision>
-    </link>
-    
+    </link>-->
+    <VLP-16 parent = "base" name = "laser_horiz" topic = "laser_horiz/packets" hz = "10" samples = "440" gpu = "false">
+        <origin xyz = "0.2325416305773505 -0.0001380069427607134 1.920122926231" rpy = "-0.0012068 0.114646 -0.0015308" />
+    </VLP-16>
 
     <xacro:macro name = "xacro_name" params = "suffix reflect" >
         <link name = "wheel_${suffix}">
@@ -84,10 +95,13 @@
                 </geometry>
             </collision>
         </link>
-        <joint name = "base_wheel_${suffix}_joint" type = "fixed">
+        <joint name = "base_wheel_${suffix}_joint" type = "continuous">
             <origin xyz="-0.1 ${reflect * 0.4} 0" rpy = "-1.57079632679 0 0"/>
             <parent link = "base"/>
             <child link = "wheel_${suffix}"/>
+            <limit effort = "30" velocity = "2" /> <!-- limit is 30 Newton-meters, 2 m/s -->
+            <axis xyz = "0 0 1" />
+            <!-- you think it'd be 1 0 0 but this is what got the wheels to actually rotate forward. weird. -->
         </joint>
     </xacro:macro>
     <xacro:xacro_name suffix = "left" reflect = "1"/>
@@ -106,10 +120,13 @@
         </collision>
     </link>
 
-    <joint name = "base_wheel_center_joint" type = "fixed">
+    <joint name = "base_wheel_center_joint" type = "continuous">
         <origin xyz = "0.10 0 -0.05" rpy = "-1.57079632679 0 0"/>
         <parent link = "base"/>
-        <parent child = "wheel_center"/>
+        <child link = "wheel_center"/>
+        <limit effort = "30" velocity = "2" /> <!-- limit is 30 Newton-meters, 2 m/s -->
+        <axis xyz = "0 0 1" />
+        <!-- you think it'd be 1 0 0 but this is what got the wheels to actually rotate forward. weird. -->
     </joint>
 
     <joint name = "base_laser_vert_bottom_joint" type = "fixed">
@@ -130,11 +147,12 @@
         <child link = "laser_vert_top_left"/>
     </joint>
 
-    <joint name = "base_laser_horiz_joint" type = "fixed">
+    <!--<joint name = "base_laser_horiz_joint" type = "fixed">
         <origin xyz = "0.2325 0.0001 1.9201" rpy = "-0.0012068 0.114646 -0.0015308"/>
         <parent link = "base"/>
         <child link = "laser_horiz"/>
-    </joint>
+    </joint> -->
+    <!-- don't need this if you're invoking the velodyne thing earlier?? -->
     
 
 </robot>

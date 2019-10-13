@@ -84,6 +84,32 @@
         </collision>
     </link>
 
+    <link name = "wheel_right">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.2" length = "0.05" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius = "0.2" length = "0.05" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name = "wheel_center">
+        <visual>
+            <geometry>
+                <cylinder radius = "0.15" length = "0.05"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius = "0.15" length = "0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
     <joint name = "base_laser_vert_bottom_joint" type = "fixed">
         <origin xyz = "0.3158 -0.0021 0.51" rpy = "3.1355 -1.3045 0.0025" />
         <parent link = "base"/>
@@ -108,9 +134,30 @@
         <child link = "laser_horiz"/>
     </joint>
     
-    <joint name = "base_wheel_left_joint" type = "fixed">
-        <origin xyz = "-0.1 0.4 0" rpy = "-1.57079632679 0 0" />
+    <joint name = "base_wheel_left_joint" type = "continuous">
+            <origin xyz="-0.1 0.4 0" rpy = "-1.57079632679 0 0"/>
+            <parent link = "base"/>
+            <child link = "wheel_left"/>
+            <limit effort = "30" velocity = "2" /> <!-- limit is 30 Newton-meters, 2 m/s -->
+            <axis xyz = "0 0 1"/>
+            <!-- you think it'd be 1 0 0 but this is what got the wheels to actually rotate forward. weird. -->
+    </joint>
+
+    <joint name = "base_wheel_right_joint" type = "continuous">
+            <origin xyz="-0.1 -0.4 0" rpy = "-1.57079632679 0 0"/>
+            <parent link = "base"/>
+            <child link = "wheel_right"/>
+            <limit effort = "30" velocity = "2" /> <!-- limit is 30 Newton-meters, 2 m/s -->
+            <axis xyz = "0 0 1"/>
+            <!-- you think it'd be 1 0 0 but this is what got the wheels to actually rotate forward. weird. -->
+    </joint>
+
+    <joint name = "base_wheel_center_joint" type = "continuous">
+        <origin xyz = "0.10 0 -0.05" rpy = "-1.57079632679 0 0"/>
         <parent link = "base"/>
-        <child link = "wheel_left"/>
+        <child link = "wheel_center"/>
+        <limit effort = "30" velocity = "2" /> <!-- limit is 30 Newton-meters, 2 m/s -->
+        <axis xyz = "0 0 1"/>
+        <!-- you think it'd be 1 0 0 but this is what got the wheels to actually rotate forward. weird. -->
     </joint>
 </robot>
