@@ -76,6 +76,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        laser_horiz_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         laser_vert_bottom:
           Alpha: 1
           Show Axes: false
@@ -140,25 +145,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.558506965637207
+      Distance: 7.135499954223633
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.5287031531333923
-        Y: -0.6826363801956177
-        Z: 2.0341837406158447
+        X: -0.4247395396232605
+        Y: -0.16730599105358124
+        Z: 1.7559503316879272
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.2845996916294098
+      Pitch: -0.2545994818210602
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.130407691001892
+      Yaw: 4.773592472076416
     Saved:
       - Class: rviz/Orbit
         Distance: 10
